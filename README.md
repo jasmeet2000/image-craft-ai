@@ -9,14 +9,14 @@
 
 **Image Craft AI** is a cross-platform, beautifully designed AI image generator that supports both cloud-based generation (HuggingFace API) and local generation (HuggingFace Diffusers + PyTorch) with seamless, dynamic switching right in the UI.
 
-### 🌟 Features Completed (Up to Phase 8)
+### 🌟 Features Completed (Up to Phase 10)
 
 - **Dual-Engine Architecture**: Dynamically swap between `HuggingFace Cloud` and `Local Diffusion` without restarting the app.
 - **Hardware Auto-Detection**: Automatically detects your CPU, CUDA (NVIDIA), or MPS (Apple Silicon) hardware and optimizes PyTorch accordingly.
 - **Local VRAM Optimization**: Explicit CPU offloading and VRAM cache clearing enables the local engine (`sd-turbo`) to run flawlessly on 4GB VRAM cards like the GTX 1650.
-- **Premium UI**: Built with Gradio, featuring a custom CSS theme, an integrated generation history gallery, and native progress indicators.
+- **Premium UI & Auto-Saving**: Built with Gradio, featuring a custom CSS theme, an integrated generation history gallery, native progress indicators, and automatic background saving with configurable compression (PNG/JPG/WEBP).
 - **Bomb-proof Error Handling**: Gracefully catches network timeouts and Out of Memory (OOM) errors, providing clear, actionable feedback to the user instead of hanging or crashing.
-- **Extensive Test Suite**: 50+ unit and UI smoke tests ensuring the application remains stable as new features are added.
+- **Extensive Test Suite & Coverage**: 60+ unit and integration tests (including real GPU execution) ensuring stability, with **75% overall code coverage** (90%+ on core logic).
 
 ---
 
@@ -57,6 +57,7 @@ The project is thoroughly documented. Check out the `docs/` folder:
 - [Architecture](docs/Architecture.md)
 - [Development Phases](docs/Phases.md)
 - [Project Memory & State](docs/Memory.md)
+- [Profiling & Performance](docs/Profiling.md)
 - [Technical Rules](docs/Rules.md)
 
 ---

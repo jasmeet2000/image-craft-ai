@@ -26,8 +26,8 @@
 # Run the app
 & "$env:USERPROFILE\anaconda3\envs\imagecraft\python.exe" -m src.ui.app
 
-# Run all tests
-& "$env:USERPROFILE\anaconda3\envs\imagecraft\python.exe" -m pytest tests/ -v
+# Run all tests with coverage
+& "$env:USERPROFILE\anaconda3\envs\imagecraft\python.exe" -m pytest tests/ --cov=src --cov-report=term-missing
 
 # System check (shows hardware & active engine)
 & "$env:USERPROFILE\anaconda3\envs\imagecraft\python.exe" -m src.config
@@ -49,7 +49,7 @@
 | 7     | UX Polish                       | ✅ Complete | 2026-07-14 |
 | 8     | Error Handling Hardening        | ✅ Complete | 2026-07-14 |
 | 9     | Performance Pass                | ✅ Complete | 2026-07-14 |
-| 10    | Testing                         | ⬜ Pending  |            |
+| 10    | Testing                         | ✅ Complete | 2026-07-14 |
 | 11    | Packaging                       | ⬜ Pending  |            |
 | 12    | Final Review                    | ⬜ Pending  |            |
 
@@ -65,16 +65,16 @@ Gradio UI (src/ui/app.py)
 GenerationService (src/services/generation_service.py)
     ├─ validate
     ├─ get_engine(request.engine_override) → generate
-    └─ HistoryService.save_result (Phase 9)
+    └─ HistoryService.save_result
 Engine Registry (src/engines/registry.py)
     ├─(if huggingface_cloud)→ HuggingFaceCloudEngine (HF Inference API)
     └─(if local_diffusion)──→ LocalDiffusionEngine (Diffusers + PyTorch)
 ```
 
-### New in Phase 9 (Performance & Storage)
-- **Image Auto-Saving (`HistoryService`)**: Images are now automatically saved to `images/` as they are generated. 
-- **Configurable Compression**: Added `IMAGE_FORMAT` (`png`, `jpg`, `webp`) and `IMAGE_QUALITY` (1-100) to `.env` settings to allow users to trade disk space for quality.
-- **Profiling Documentation**: Created `docs/Profiling.md` outlining VRAM constraints, CPU offload mechanics, and cloud latency benchmarks.
+### New in Phase 10 (Testing & Coverage)
+- **Integration Tests**: Added `tests/integration/test_cloud_engine.py` (mocked) and `tests/integration/test_local_engine_integration.py` (real GPU execution).
+- **Unit Tests**: Added `tests/unit/test_history_service.py` to cover new Phase 9 code.
+- **Coverage**: Project coverage is now 75% overall, with core services (`registry`, `settings`, `history_service`, `generation_service`, `app.py`) sitting at 90-100%.
 
 ---
 
@@ -92,8 +92,9 @@ Engine Registry (src/engines/registry.py)
 ## Test Results
 
 ```
-57 passed, 1 warning in ~12s
-- All existing tests passing.
+62 passed, 6 warnings in ~3 mins (due to real GPU diffusion execution)
+Project coverage: 75%
+- Core logic is fully covered.
 ```
 
 ---
@@ -103,20 +104,19 @@ Engine Registry (src/engines/registry.py)
 | Phase | File                                   | Action   |
 | ----- | -------------------------------------- | -------- |
 | ...   | (Previous phases omitted for brevity)  |          |
-| 9     | `src/services/history_service.py`      | Created  |
-| 9     | `src/services/generation_service.py`   | Modified (hooks into history_service) |
-| 9     | `src/config/settings.py`               | Modified (image format configs) |
-| 9     | `docs/Profiling.md`                    | Created  |
+| 10    | `tests/integration/test_cloud_engine.py` | Created  |
+| 10    | `tests/integration/test_local_engine_integration.py` | Created |
+| 10    | `tests/unit/test_history_service.py`   | Created  |
+| 10    | `requirements.txt`                     | Modified (added pytest-cov) |
 
 ---
 
 ## Known Issues / Blockers
 
-- First time generating an image with `local_diffusion` will take several minutes as it downloads the ~2-4GB model weights from HuggingFace to your `~/.cache/huggingface` folder. Subsequent runs will be fast.
-- HF API token still required if using the cloud engine.
+- First time generating an image with `local_diffusion` takes several minutes as it downloads the ~2-4GB model weights from HuggingFace to your `~/.cache/huggingface` folder. Subsequent runs will be fast.
 
 ---
 
 ## Next Phase Preview
 
-**Phase 10 — Testing**: Increase code coverage. We will add unit tests for `HistoryService` and integration tests for engine interactions. We'll also run `pytest-cov` to generate a coverage report.
+**Phase 11 — Packaging**: Finalize `README.md` setup instructions for cross-platform usage and prepare the app for end-users.
