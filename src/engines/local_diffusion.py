@@ -64,6 +64,9 @@ class LocalDiffusionEngine(ImageGenerator):
 
         # Basic memory optimizations for CUDA/MPS
         if self._device == "cuda":
+            # Fix for black/blue images on GTX 16-series GPUs (fp16 VAE NaN issues)
+            if hasattr(self._pipeline, "upcast_vae"):
+                self._pipeline.upcast_vae()
             self._pipeline.enable_model_cpu_offload()
 
         logger.info("Local model loaded successfully.")
