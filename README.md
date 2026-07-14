@@ -2,14 +2,14 @@
 
 > A modern, premium AI image generator built with Python and Gradio.
 
-![Image Craft AI](https://img.shields.io/badge/Status-Under_Development-orange)
+![Image Craft AI](https://img.shields.io/badge/Version-1.0.0-brightgreen)
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![Gradio](https://img.shields.io/badge/Gradio-5.33.0-FF7C00)
 ![PyTorch](https://img.shields.io/badge/PyTorch-CUDA_Enabled-EE4C2C)
 
 **Image Craft AI** is a cross-platform, beautifully designed AI image generator that supports both cloud-based generation (HuggingFace API) and local generation (HuggingFace Diffusers + PyTorch) with seamless, dynamic switching right in the UI.
 
-### 🌟 Features Completed (Up to Phase 10)
+### 🌟 Key Features
 
 - **Dual-Engine Architecture**: Dynamically swap between `HuggingFace Cloud` and `Local Diffusion` without restarting the app.
 - **Hardware Auto-Detection**: Automatically detects your CPU, CUDA (NVIDIA), or MPS (Apple Silicon) hardware and optimizes PyTorch accordingly.
