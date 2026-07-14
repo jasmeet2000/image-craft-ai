@@ -23,14 +23,11 @@
 ## Environment Setup
 
 ```bash
-# Run the app
-& "$env:USERPROFILE\anaconda3\envs\imagecraft\python.exe" -m src.ui.app
+# Windows
+start.bat
 
-# Run all tests with coverage
-& "$env:USERPROFILE\anaconda3\envs\imagecraft\python.exe" -m pytest tests/ --cov=src --cov-report=term-missing
-
-# System check (shows hardware & active engine)
-& "$env:USERPROFILE\anaconda3\envs\imagecraft\python.exe" -m src.config
+# macOS / Linux
+./start.sh
 ```
 
 ---
@@ -50,7 +47,7 @@
 | 8     | Error Handling Hardening        | ✅ Complete | 2026-07-14 |
 | 9     | Performance Pass                | ✅ Complete | 2026-07-14 |
 | 10    | Testing                         | ✅ Complete | 2026-07-14 |
-| 11    | Packaging                       | ⬜ Pending  |            |
+| 11    | Packaging                       | ✅ Complete | 2026-07-14 |
 | 12    | Final Review                    | ⬜ Pending  |            |
 
 ---
@@ -71,10 +68,10 @@ Engine Registry (src/engines/registry.py)
     └─(if local_diffusion)──→ LocalDiffusionEngine (Diffusers + PyTorch)
 ```
 
-### New in Phase 10 (Testing & Coverage)
-- **Integration Tests**: Added `tests/integration/test_cloud_engine.py` (mocked) and `tests/integration/test_local_engine_integration.py` (real GPU execution).
-- **Unit Tests**: Added `tests/unit/test_history_service.py` to cover new Phase 9 code.
-- **Coverage**: Project coverage is now 75% overall, with core services (`registry`, `settings`, `history_service`, `generation_service`, `app.py`) sitting at 90-100%.
+### New in Phase 11 (Packaging)
+- **Cross-Platform Support**: Simplified `requirements.txt` by removing hardcoded Windows-specific CUDA indices. PyTorch 2.3.1 naturally installs the correct CUDA binaries on Windows/Linux and MPS binaries on macOS natively from PyPI.
+- **Startup Scripts**: Created `start.bat` and `start.sh` for one-click startup across all OS environments.
+- **README Update**: Added explicit setup and start instructions for multiple operating systems.
 
 ---
 
@@ -104,10 +101,10 @@ Project coverage: 75%
 | Phase | File                                   | Action   |
 | ----- | -------------------------------------- | -------- |
 | ...   | (Previous phases omitted for brevity)  |          |
-| 10    | `tests/integration/test_cloud_engine.py` | Created  |
-| 10    | `tests/integration/test_local_engine_integration.py` | Created |
-| 10    | `tests/unit/test_history_service.py`   | Created  |
-| 10    | `requirements.txt`                     | Modified (added pytest-cov) |
+| 11    | `start.bat`                            | Created  |
+| 11    | `start.sh`                             | Created  |
+| 11    | `requirements.txt`                     | Modified (generalized PyTorch) |
+| 11    | `README.md`                            | Modified (cross-OS setup) |
 
 ---
 
@@ -119,4 +116,4 @@ Project coverage: 75%
 
 ## Next Phase Preview
 
-**Phase 11 — Packaging**: Finalize `README.md` setup instructions for cross-platform usage and prepare the app for end-users.
+**Phase 12 — Final Review**: Review PRD acceptance criteria, finalize any remaining documentation, and mark the project as fully delivered!

@@ -31,9 +31,10 @@ Ensure you have [Miniconda](https://docs.conda.io/en/latest/miniconda.html) or A
 conda create -n imagecraft python=3.10.20 -y
 conda activate imagecraft
 
-# Install dependencies (includes PyTorch with CUDA 12.1 and Diffusers)
+# Install dependencies
 pip install -r requirements.txt
 ```
+*Note: PyTorch 2.3.1 installed from PyPI automatically supports CUDA 12.1 on Windows/Linux and MPS on macOS. No extra configuration is needed.*
 
 ### 3. Configuration
 ```bash
@@ -43,9 +44,25 @@ cp .env.example .env
 Edit the `.env` file and insert your HuggingFace API token if you want to use the cloud engine.
 
 ### 4. Run the Application
+
+We've provided one-command startup scripts that will automatically launch the app. Make sure your `imagecraft` conda environment is activated.
+
+**Windows:**
+```cmd
+start.bat
+```
+
+**macOS / Linux:**
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+Alternatively, you can always run it directly via Python:
 ```bash
 python -m src.ui.app
 ```
+
 The app will launch and automatically open in your default web browser at `http://127.0.0.1:7860`.
 
 ---
