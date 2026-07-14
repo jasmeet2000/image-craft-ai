@@ -1,0 +1,45 @@
+# === OS & IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+dist/
+build/
+*.whl
+.eggs/
+
+# === Virtual Environments ===
+.venv/
+venv/
+env/
+ENV/
+
+# === Environment & Secrets ===
+.env
+
+# === Project-Specific ===
+images/
+logs/
+
+# === HuggingFace Cache (optional, if stored locally) ===
+models_cache/
+
+# === Testing ===
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# === Jupyter (if any) ===
+.ipynb_checkpoints/

@@ -1,0 +1,19 @@
+# Image Craft AI - Dependencies
+# Pinned to exact versions for reproducibility.
+# Python 3.10.x | conda env: imagecraft
+
+# --- Core (needed from Phase 2 onward) ---
+gradio==5.33.0                # UI framework
+huggingface-hub==0.33.1       # HF Inference API client
+Pillow==11.2.1                # Image handling
+python-dotenv==1.1.0          # .env file loading
+pydantic==2.11.3              # Data validation & models
+
+# --- Testing ---
+pytest==8.4.1                 # Test runner
+
+# --- Local Engine (Phase 6) ---
+torch==2.3.1 --extra-index-url https://download.pytorch.org/whl/cu121
+diffusers==0.29.2
+transformers==4.42.4
+accelerate==0.32.1
