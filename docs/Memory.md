@@ -13,7 +13,7 @@
 | Python             | 3.10.20, conda env `imagecraft`                        |
 | UI framework       | Gradio 5.33.0                                          |
 | Priority engine    | HuggingFace Inference API (cloud, free tier)           |
-| HF model (cloud)   | `stabilityai/stable-diffusion-xl-base-1.0`            |
+| HF model (cloud)   | `black-forest-labs/FLUX.1-schnell`            |
 | Local model        | `stabilityai/sd-turbo`                                 |
 | Dev OS             | Windows 10.0.26200                                     |
 | Dev GPU            | NVIDIA GeForce GTX 1650, 4.0 GB VRAM                   |
@@ -101,6 +101,7 @@ While v1 is complete, future iterations may consider:
 | 2026-07-13 | `sd-turbo` for local engine                        | Fits perfectly in 4 GB VRAM                  |
 | 2026-07-14 | `engine_override` in GenerationRequest             | Allows UI to switch engines dynamically without modifying the global config singleton. |
 | 2026-07-14 | `HistoryService` for auto-saving                   | Prevents memory bloat in Gradio state and permanently archives generations locally. |
+| 2026-07-14 | Switch default cloud model to FLUX.1-schnell       | Upgraded from SDXL to FLUX.1-schnell for superior free-tier output quality. Default UI resolution bumped to 1024x1024 to match native FLUX resolution. |
 
 ---
 
