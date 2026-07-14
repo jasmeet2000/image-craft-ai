@@ -152,11 +152,22 @@ class HuggingFaceCloudEngine(ImageGenerator):
         Returns:
             Dict of API keyword arguments.
         """
+        actual_steps = request.num_steps
+        actual_guidance = request.guidance_scale
+
+        # FLUX.1-schnell is a distilled 1-4 step model.
+        if "schnell" in self._model.lower():
+            if actual_steps > 4:
+                logger.info("FLUX.1-schnell detected. Capping steps from %d to 4.", actual_steps)
+                actual_steps = 4
+            # FLUX.1-schnell does not use guidance scale usually, but setting to 0.0 or leaving as is usually works.
+            # We'll just pass it as is unless it causes issues, but for safety we can let the API handle it.
+
         kwargs: dict[str, Any] = {
             "width": request.width,
             "height": request.height,
-            "num_inference_steps": request.num_steps,
-            "guidance_scale": request.guidance_scale,
+            "num_inference_steps": actual_steps,
+            "guidance_scale": actual_guidance,
         }
         if request.negative_prompt:
             kwargs["negative_prompt"] = request.negative_prompt

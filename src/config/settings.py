@@ -45,10 +45,10 @@ class Settings:
 
     engine: str = "huggingface_cloud"
     hf_api_token: str = ""
-    hf_model: str = "stabilityai/stable-diffusion-xl-base-1.0"
+    hf_model: str = "black-forest-labs/FLUX.1-schnell"
     local_model: str = "stabilityai/sd-turbo"
-    default_width: int = 512
-    default_height: int = 512
+    default_width: int = 1024
+    default_height: int = 1024
     default_steps: int = 20
     default_guidance_scale: float = 7.5
     image_format: str = "png"
@@ -146,13 +146,13 @@ def load_settings() -> Settings:
         engine=os.getenv("ENGINE", "huggingface_cloud"),
         hf_api_token=os.getenv("HF_API_TOKEN", ""),
         hf_model=os.getenv(
-            "HF_MODEL", "stabilityai/stable-diffusion-xl-base-1.0"
+            "HF_MODEL", "black-forest-labs/FLUX.1-schnell"
         ),
         local_model=os.getenv(
             "LOCAL_MODEL", "stabilityai/sd-turbo"
         ),
-        default_width=int(os.getenv("DEFAULT_WIDTH", "512")),
-        default_height=int(os.getenv("DEFAULT_HEIGHT", "512")),
+        default_width=int(os.getenv("DEFAULT_WIDTH", "1024")),
+        default_height=int(os.getenv("DEFAULT_HEIGHT", "1024")),
         default_steps=int(os.getenv("DEFAULT_STEPS", "20")),
         default_guidance_scale=float(os.getenv("DEFAULT_GUIDANCE_SCALE", "7.5")),
         image_format=os.getenv("IMAGE_FORMAT", "png"),
