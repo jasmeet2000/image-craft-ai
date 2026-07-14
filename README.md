@@ -11,7 +11,7 @@
 
 ### 🌟 Key Features
 
-- **Dual-Engine Architecture**: Dynamically swap between `HuggingFace Cloud` and `Local Diffusion` without restarting the app.
+- **Dual-Engine Architecture**: Dynamically swap between `HuggingFace Cloud` (powered by FLUX.1-schnell) and `Local Diffusion` without restarting the app.
 - **Hardware Auto-Detection**: Automatically detects your CPU, CUDA (NVIDIA), or MPS (Apple Silicon) hardware and optimizes PyTorch accordingly.
 - **Local VRAM Optimization**: Explicit CPU offloading and VRAM cache clearing enables the local engine (`sd-turbo`) to run flawlessly on 4GB VRAM cards like the GTX 1650.
 - **Premium UI & Auto-Saving**: Built with Gradio, featuring a custom CSS theme, an integrated generation history gallery, native progress indicators, and automatic background saving with configurable compression (PNG/JPG/WEBP).
