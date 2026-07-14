@@ -145,6 +145,18 @@ class LocalDiffusionEngine(ImageGenerator):
             request.num_steps,
         )
 
+        actual_steps = request.num_steps
+        actual_guidance = request.guidance_scale
+
+        # Turbo models break down if steps > 4 or guidance > 1.5
+        if "turbo" in self._model_id.lower():
+            if actual_steps > 4:
+                logger.info("Turbo model detected. Capping steps from %d to 4.", actual_steps)
+                actual_steps = 4
+            if actual_guidance > 1.5:
+                logger.info("Turbo model detected. Capping guidance from %.1f to 0.0.", actual_guidance)
+                actual_guidance = 0.0
+
         start_time = time.perf_counter()
 
         try:
@@ -153,8 +165,8 @@ class LocalDiffusionEngine(ImageGenerator):
                 negative_prompt=request.negative_prompt,
                 width=request.width,
                 height=request.height,
-                num_inference_steps=request.num_steps,
-                guidance_scale=request.guidance_scale,
+                num_inference_steps=actual_steps,
+                guidance_scale=actual_guidance,
                 generator=generator,
             )
             image = output.images[0]
