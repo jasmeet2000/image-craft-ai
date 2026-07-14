@@ -86,7 +86,7 @@
 
 ---
 
-## Phase 9 — Performance Pass
+## Phase 9 — Performance Pass ✅
 **Deliverables**:
 - Model caching (don't reload on every generation).
 - Memory cleanup after generation (especially local engine).

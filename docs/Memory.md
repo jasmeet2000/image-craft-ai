@@ -48,7 +48,7 @@
 | 6     | Second Engine + Switching       | ✅ Complete | 2026-07-13 |
 | 7     | UX Polish                       | ✅ Complete | 2026-07-14 |
 | 8     | Error Handling Hardening        | ✅ Complete | 2026-07-14 |
-| 9     | Performance Pass                | ⬜ Pending  |            |
+| 9     | Performance Pass                | ✅ Complete | 2026-07-14 |
 | 10    | Testing                         | ⬜ Pending  |            |
 | 11    | Packaging                       | ⬜ Pending  |            |
 | 12    | Final Review                    | ⬜ Pending  |            |
@@ -59,24 +59,22 @@
 
 ```
 Gradio UI (src/ui/app.py)
-    ├─ Engine Dropdown (Phase 7)
-    ├─ Generation History Gallery (Phase 7)
+    ├─ Engine Dropdown
+    ├─ Generation History Gallery
     ↓ handle_generate(request)
 GenerationService (src/services/generation_service.py)
-    ↓ validate → get_engine(request.engine_override) → generate
+    ├─ validate
+    ├─ get_engine(request.engine_override) → generate
+    └─ HistoryService.save_result (Phase 9)
 Engine Registry (src/engines/registry.py)
     ├─(if huggingface_cloud)→ HuggingFaceCloudEngine (HF Inference API)
     └─(if local_diffusion)──→ LocalDiffusionEngine (Diffusers + PyTorch)
 ```
 
-### UI Features Added in Phase 7
-- **Engine Switching Dropdown**: Added directly into the UI (Generation Settings accordion). It dynamically lists all registered engines and passes the selected engine as an override via `GenerationRequest`.
-- **Generation History Gallery**: A dedicated `gr.Gallery` component maintains a visual history of all generations in the current session.
-- **Progress Tracking**: Hooked into `gr.Progress()` to provide visual feedback during generation.
-
-### Error Handling (Phase 8)
-- **HuggingFaceCloudEngine**: Added explicit handling for network `TimeoutError` and `ConnectionError` to prevent the UI from freezing silently during a network outage.
-- **LocalDiffusionEngine**: Added explicit handling for `torch.cuda.OutOfMemoryError` to provide a user-friendly suggestion to reduce image dimensions instead of throwing a generic traceback.
+### New in Phase 9 (Performance & Storage)
+- **Image Auto-Saving (`HistoryService`)**: Images are now automatically saved to `images/` as they are generated. 
+- **Configurable Compression**: Added `IMAGE_FORMAT` (`png`, `jpg`, `webp`) and `IMAGE_QUALITY` (1-100) to `.env` settings to allow users to trade disk space for quality.
+- **Profiling Documentation**: Created `docs/Profiling.md` outlining VRAM constraints, CPU offload mechanics, and cloud latency benchmarks.
 
 ---
 
@@ -87,6 +85,7 @@ Engine Registry (src/engines/registry.py)
 | 2026-07-13 | Cloud-first (HF Inference API)                     | Free tier, no upfront cost                   |
 | 2026-07-13 | `sd-turbo` for local engine                        | Fits perfectly in 4 GB VRAM                  |
 | 2026-07-14 | `engine_override` in GenerationRequest             | Allows UI to switch engines dynamically without modifying the global config singleton. |
+| 2026-07-14 | `HistoryService` for auto-saving                   | Prevents memory bloat in Gradio state and permanently archives generations locally. |
 
 ---
 
@@ -104,12 +103,10 @@ Engine Registry (src/engines/registry.py)
 | Phase | File                                   | Action   |
 | ----- | -------------------------------------- | -------- |
 | ...   | (Previous phases omitted for brevity)  |          |
-| 7     | `src/models/generation.py`             | Modified (added engine_override) |
-| 7     | `src/services/generation_service.py`   | Modified (respect engine_override) |
-| 7     | `src/ui/app.py`                        | Modified (Gallery, Dropdown, Progress) |
-| 7     | `tests/ui_smoke/test_app.py`           | Modified (updated test signatures) |
-| 8     | `src/engines/huggingface_cloud.py`     | Modified (error catching) |
-| 8     | `src/engines/local_diffusion.py`       | Modified (error catching) |
+| 9     | `src/services/history_service.py`      | Created  |
+| 9     | `src/services/generation_service.py`   | Modified (hooks into history_service) |
+| 9     | `src/config/settings.py`               | Modified (image format configs) |
+| 9     | `docs/Profiling.md`                    | Created  |
 
 ---
 
@@ -122,4 +119,4 @@ Engine Registry (src/engines/registry.py)
 
 ## Next Phase Preview
 
-**Phase 9 — Performance Pass**: Profile and optimize. Specifically, ensure the local engine lazily loads perfectly and clears memory completely. Ensure the cloud engine timeout settings are optimal.
+**Phase 10 — Testing**: Increase code coverage. We will add unit tests for `HistoryService` and integration tests for engine interactions. We'll also run `pytest-cov` to generate a coverage report.

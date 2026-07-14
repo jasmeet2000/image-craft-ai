@@ -19,6 +19,7 @@ _PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 _VALID_ENGINES = frozenset({"huggingface_cloud", "local_diffusion"})
 _VALID_LOG_LEVELS = frozenset({"DEBUG", "INFO", "WARNING", "ERROR"})
+_VALID_IMAGE_FORMATS = frozenset({"png", "jpg", "jpeg", "webp"})
 
 
 @dataclass(frozen=True)
@@ -34,6 +35,8 @@ class Settings:
         default_height: Default image height in pixels.
         default_steps: Default number of inference steps.
         default_guidance_scale: Default CFG guidance scale.
+        image_format: Format to save images (png, jpg, webp).
+        image_quality: Compression quality for jpg/webp (1-100).
         image_output_dir: Directory to save generated images.
         log_dir: Directory to save log files.
         log_level: Logging level (DEBUG, INFO, WARNING, ERROR).
@@ -48,6 +51,8 @@ class Settings:
     default_height: int = 512
     default_steps: int = 20
     default_guidance_scale: float = 7.5
+    image_format: str = "png"
+    image_quality: int = 95
     image_output_dir: Path = field(default_factory=lambda: _PROJECT_ROOT / "images")
     log_dir: Path = field(default_factory=lambda: _PROJECT_ROOT / "logs")
     log_level: str = "INFO"
@@ -75,6 +80,17 @@ def validate_settings(settings: Settings) -> list[str]:
         issues.append(
             f"LOG_LEVEL '{settings.log_level}' is not valid. "
             f"Options: {', '.join(sorted(_VALID_LOG_LEVELS))}"
+        )
+
+    if settings.image_format.lower() not in _VALID_IMAGE_FORMATS:
+        issues.append(
+            f"IMAGE_FORMAT '{settings.image_format}' is not valid. "
+            f"Options: {', '.join(sorted(_VALID_IMAGE_FORMATS))}"
+        )
+
+    if not 1 <= settings.image_quality <= 100:
+        issues.append(
+            f"IMAGE_QUALITY {settings.image_quality} out of range (1–100)."
         )
 
     if not 64 <= settings.default_width <= 2048:
@@ -139,6 +155,8 @@ def load_settings() -> Settings:
         default_height=int(os.getenv("DEFAULT_HEIGHT", "512")),
         default_steps=int(os.getenv("DEFAULT_STEPS", "20")),
         default_guidance_scale=float(os.getenv("DEFAULT_GUIDANCE_SCALE", "7.5")),
+        image_format=os.getenv("IMAGE_FORMAT", "png"),
+        image_quality=int(os.getenv("IMAGE_QUALITY", "95")),
         image_output_dir=Path(
             os.getenv("IMAGE_OUTPUT_DIR", str(_PROJECT_ROOT / "images"))
         ),
