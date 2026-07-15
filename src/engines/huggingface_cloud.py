@@ -4,6 +4,7 @@ Uses ``huggingface_hub.InferenceClient`` to call the HuggingFace
 serverless Inference API. Requires a valid HF_API_TOKEN in config.
 """
 
+from __future__ import annotations
 import logging
 import time
 from typing import Any

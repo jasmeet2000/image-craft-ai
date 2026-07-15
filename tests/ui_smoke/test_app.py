@@ -91,7 +91,7 @@ class TestHandleGenerate:
             instance = MockService.return_value
             instance.generate.return_value = mock_result
 
-            image, info, gallery, state = handle_generate(
+            empty_st, image_upd, info_upd, gallery, state = handle_generate(
                 prompt="test prompt",
                 negative_prompt="",
                 engine_name="mock_engine",
@@ -103,9 +103,10 @@ class TestHandleGenerate:
                 history=[],
             )
 
-            assert image.size == (512, 512)
-            assert "mock_engine" in info
-            assert "1.50" in info
+            # handle_generate returns gr.update() dicts for image/info
+            assert image_upd["value"].size == (512, 512)
+            assert "mock_engine" in info_upd["value"]
+            assert "1.50" in info_upd["value"]
 
     def test_empty_prompt_raises_error(self) -> None:
         """Handler should raise gr.Error for empty prompt."""

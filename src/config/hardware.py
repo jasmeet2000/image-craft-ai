@@ -5,6 +5,7 @@ Handles the case where PyTorch is not yet installed by falling back to CPU
 gracefully.
 """
 
+from __future__ import annotations
 import logging
 import platform
 from dataclasses import dataclass

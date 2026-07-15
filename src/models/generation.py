@@ -67,6 +67,7 @@ class GenerationResult:
         timestamp: ISO 8601 timestamp of when generation completed.
         seed: The seed that was used (or -1 if unknown).
         parameters: Full parameter dict for reproducibility.
+        image_path: The filesystem path where the image was saved (populated by the storage service).
     """
 
     image: Image.Image
@@ -78,3 +79,4 @@ class GenerationResult:
     )
     seed: int = -1
     parameters: dict[str, Any] = field(default_factory=dict)
+    image_path: str | None = None

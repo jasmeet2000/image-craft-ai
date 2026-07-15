@@ -5,13 +5,14 @@ touches engines directly. This is the single point of orchestration
 for prompt validation, engine selection, and result handling.
 """
 
+from __future__ import annotations
 import logging
 
 from src.config.settings import get_settings
 from src.engines.base import ImageGenerator
 from src.engines.registry import get_engine
 from src.models.generation import GenerationRequest, GenerationResult
-from src.services.history_service import HistoryService
+from src.services.image_storage_service import ImageStorageService
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,7 @@ class GenerationService:
                 engine is loaded from config via the registry.
         """
         self._engine_override = engine
-        self._history_service = HistoryService()
+        self._storage_service = ImageStorageService()
 
     def _get_engine(self, request: GenerationRequest | None = None) -> ImageGenerator:
         """Get the active engine from config or override.
@@ -108,7 +109,8 @@ class GenerationService:
         result = engine.generate(request)
 
         # Save the result to disk
-        self._history_service.save_result(result)
+        saved_path = self._storage_service.save_result(result)
+        result.image_path = str(saved_path.absolute())
 
         logger.info(
             "Generation complete: %.2fs (engine=%s)",

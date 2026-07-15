@@ -5,6 +5,7 @@ Auto-detects CUDA/MPS/CPU hardware and loads the model into VRAM/RAM.
 The model is loaded lazily on first generation to keep startup fast.
 """
 
+from __future__ import annotations
 import gc
 import logging
 import time
@@ -54,11 +55,19 @@ class LocalDiffusionEngine(ImageGenerator):
         )
 
         dtype = torch.float16 if self._device != "cpu" else torch.float32
+        variant = "fp16" if self._device != "cpu" else None
+
+        if self._device == "cuda":
+            gpu_name = torch.cuda.get_device_name(0).lower()
+            if "1650" in gpu_name or "1660" in gpu_name:
+                logger.warning("GTX 16-series GPU detected. Falling back to fp32 to prevent NaN overflow.")
+                dtype = torch.float32
+                variant = None
 
         self._pipeline = AutoPipelineForText2Image.from_pretrained(
             self._model_id,
             torch_dtype=dtype,
-            variant="fp16" if self._device != "cpu" else None,
+            variant=variant,
         )
         self._pipeline.to(self._device)
 
@@ -168,8 +177,18 @@ class LocalDiffusionEngine(ImageGenerator):
                 num_inference_steps=actual_steps,
                 guidance_scale=actual_guidance,
                 generator=generator,
+                output_type="pt",
             )
-            image = output.images[0]
+            
+            tensor = output.images
+            
+            if torch.isnan(tensor).any() or torch.isinf(tensor).any():
+                raise RuntimeError(
+                    "The generated image contains NaN values (often caused by fp16 precision "
+                    "issues on this GPU). Try restarting or forcing FP32 precision."
+                )
+                
+            image = pipeline.image_processor.postprocess(tensor, output_type="pil")[0]
         except torch.cuda.OutOfMemoryError as exc:
             raise RuntimeError(
                 "Your GPU ran out of memory (VRAM). Try reducing the image dimensions "

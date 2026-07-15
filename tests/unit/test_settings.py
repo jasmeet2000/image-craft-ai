@@ -22,10 +22,10 @@ class TestSettingsDefaults:
         assert settings.engine == "huggingface_cloud"
 
     def test_default_dimensions(self) -> None:
-        """Default image dimensions should be 512x512."""
+        """Default image dimensions should be 1024x1024."""
         settings = Settings()
-        assert settings.default_width == 512
-        assert settings.default_height == 512
+        assert settings.default_width == 1024
+        assert settings.default_height == 1024
 
     def test_default_generation_params(self) -> None:
         """Default steps and guidance should have sensible values."""
@@ -148,4 +148,4 @@ class TestLoadSettings:
         with mock.patch.dict(os.environ, clean_env, clear=True):
             settings = load_settings()
             assert settings.engine == "huggingface_cloud"
-            assert settings.default_width == 512
+            assert settings.default_width == 1024
