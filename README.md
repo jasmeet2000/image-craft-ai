@@ -69,6 +69,9 @@ python -m src.ui.app
 
 The app will launch and automatically open in your default web browser at `http://127.0.0.1:7860`.
 
+### ☁️ Future: Cloud Deployment
+*Note: Originally, this project was designed to be deployed to Hugging Face Spaces. However, as of mid-2026, Hugging Face updated their free tier policy, requiring a paid PRO subscription for Gradio spaces. For now, deployment is deferred, and the project serves as a comprehensive portfolio piece demonstrating a complete end-to-end local architecture.*
+
 ---
 
 ## 📚 Documentation

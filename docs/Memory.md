@@ -120,6 +120,7 @@ While v1 is complete, future iterations may consider:
 | 2026-07-14 | Explicit Light/Dark Themes via `gr.themes.Base`    | Replaced custom CSS background hardcoding with proper Gradio CSS variables (`var(--background-fill-primary)`) and an explicit `gr.themes.Base()` definition with pure Light (#FAFAFA/#FFFFFF) and true Dark (#0F0F14/#1A1A22) `neutral_hue` palettes to fix washed-out gray artifacts. |
 | 2026-07-15 | FP32 fallback for GTX 16-series in local engine    | GTX 1650/1660 GPUs produce NaN tensors (black images) with fp16. Auto-detect by GPU name and force fp32. SD-Turbo fits in 4GB VRAM even at fp32. |
 | 2026-07-18 | Demo Video & Marketing Scripts                     | Added demo video link to `README.md` and generated LinkedIn product showcase narration scripts for project promotion. |
+| 2026-07-18 | Deferred Cloud Hosting / HF Spaces                 | Attempted Hugging Face Spaces deployment but found their free tier policy changed recently (Gradio Spaces now require PRO or ZeroGPU limits). Decided to defer cloud hosting in favor of local demo + video to avoid unnecessary costs. Spaces-specific scaffolding (`app.py` wrapper) was removed. |
 
 ---
 
