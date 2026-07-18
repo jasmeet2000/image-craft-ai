@@ -9,6 +9,10 @@
 
 **Image Craft AI** is a cross-platform, beautifully designed AI image generator that supports both cloud-based generation (HuggingFace API) and local generation (HuggingFace Diffusers + PyTorch) with seamless, dynamic switching right in the UI.
 
+### 🎥 Demo Video
+
+[Watch the Demo Video](https://drive.google.com/file/d/1vDiXCVipqjeALe5rdCVrpL63iqHjzd-d/view?usp=sharing)
+
 ### 🌟 Key Features
 
 - **Dual-Engine Architecture**: Dynamically swap between `HuggingFace Cloud` (powered by FLUX.1-schnell) and `Local Diffusion` without restarting the app.

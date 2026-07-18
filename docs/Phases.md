@@ -129,3 +129,13 @@
 - Project handed off in a state where anyone can pick it up from `Memory.md`.
 
 **Runnable**: All acceptance criteria met, all docs current, no stale TODOs.
+
+---
+
+## Phase 13 — Marketing & Demo ✅
+**Deliverables**:
+- Demo video recorded and linked in `README.md`.
+- Narration scripts created for LinkedIn product showcase.
+- `Memory.md` and `Phases.md` updated to reflect post-release marketing activities.
+
+**Runnable**: Demo video is accessible via the link in the `README.md` and scripts are ready for recording.

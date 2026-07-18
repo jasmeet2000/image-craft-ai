@@ -31,6 +31,8 @@ ENV/
 # === Project-Specific ===
 images/
 logs/
+local_diffusion_fix.md
+
 
 # === HuggingFace Cache (optional, if stored locally) ===
 models_cache/

@@ -119,6 +119,7 @@ While v1 is complete, future iterations may consider:
 | 2026-07-14 | UI Overhaul — Premium Glassmorphic Dark Theme      | Complete UI rework: glassmorphic cards with `backdrop-filter: blur`, layered dark backgrounds (`#0c0a1a`→`#151228`→`#1e1b2e`), animated particles in header/empty state, shimmer generation animation, slide-in toast notifications, hover micro-interactions on all interactive elements, full-width responsive layout (1400px max, stacks at 768px), gallery moved to full-width section with click-to-reload-prompt, status bar restyled as pill badges. Theme uses `gr.themes.Soft` with custom violet `gr.themes.Color` palette. |
 | 2026-07-14 | Explicit Light/Dark Themes via `gr.themes.Base`    | Replaced custom CSS background hardcoding with proper Gradio CSS variables (`var(--background-fill-primary)`) and an explicit `gr.themes.Base()` definition with pure Light (#FAFAFA/#FFFFFF) and true Dark (#0F0F14/#1A1A22) `neutral_hue` palettes to fix washed-out gray artifacts. |
 | 2026-07-15 | FP32 fallback for GTX 16-series in local engine    | GTX 1650/1660 GPUs produce NaN tensors (black images) with fp16. Auto-detect by GPU name and force fp32. SD-Turbo fits in 4GB VRAM even at fp32. |
+| 2026-07-18 | Demo Video & Marketing Scripts                     | Added demo video link to `README.md` and generated LinkedIn product showcase narration scripts for project promotion. |
 
 ---
 
